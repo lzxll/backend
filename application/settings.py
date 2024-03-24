@@ -1,3 +1,4 @@
+from conf.env import *
 import os
 import sys
 from pathlib import Path
@@ -10,7 +11,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ******************** 动态配置 ******************** #
 # ================================================= #
 
-from conf.env import *
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -32,7 +32,8 @@ DEBUG = locals().get("DEBUG", True)
 ALLOWED_HOSTS = locals().get("ALLOWED_HOSTS", ["*"])
 
 # 列权限需要排除的App应用
-COLUMN_EXCLUDE_APPS = ['channels', 'captcha'] + locals().get("COLUMN_EXCLUDE_APPS", [])
+COLUMN_EXCLUDE_APPS = ['channels', 'captcha'] + \
+    locals().get("COLUMN_EXCLUDE_APPS", [])
 
 INSTALLED_APPS = [
     "django.contrib.auth",
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     "captcha",
     "channels",
     "dvadmin.system",
+    "concrete_data",
 ]
 
 MIDDLEWARE = [
@@ -95,6 +97,7 @@ DATABASES = {
         "PASSWORD": DATABASE_PASSWORD,
         "HOST": DATABASE_HOST,
         "PORT": DATABASE_PORT,
+        # "OPTIONS": {'charset': 'utf8mb4'},
     }
 }
 AUTH_USER_MODEL = "system.Users"
@@ -143,7 +146,7 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = "media"  # 项目下的目录
 MEDIA_URL = "/media/"  # 跟STATIC_URL类似，指定用户可以通过这个url找到文件
 
-#添加以下代码以后就不用写{% load staticfiles %}，可以直接引用
+# 添加以下代码以后就不用写{% load staticfiles %}，可以直接引用
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder"
@@ -396,6 +399,6 @@ PLUGINS_URL_PATTERNS = []
 # from dvadmin_third.settings import *            # 第三方用户管理
 # from dvadmin_ak_sk.settings import *            # 秘钥管理管理
 # from dvadmin_tenants.settings import *            # 租户管理
-#from dvadmin_social_auth.settings import *
+# from dvadmin_social_auth.settings import *
 # ...
 # ********** 一键导入插件配置结束 **********
