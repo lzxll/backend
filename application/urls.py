@@ -85,8 +85,10 @@ urlpatterns = (
         path("api/init/dictionary/", InitDictionaryViewSet.as_view()),
         path("api/init/settings/", InitSettingsViewSet.as_view()),
         path("apiLogin/", ApiLogin.as_view()),
+        # 数据库模块
         path('', include('concrete_data.urls')),
-
+        # 图数据库模块
+        path('kgraph/', include('kgraph.urls')),
         # 仅用于开发，上线需关闭
         path("api/token/", LoginTokenView.as_view()),
     ]

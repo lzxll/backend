@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "channels",
     "dvadmin.system",
     "concrete_data",
+    "kgraph",
 ]
 
 MIDDLEWARE = [

@@ -128,7 +128,7 @@ class CarbonizationGene(models.Model):
     carbon_duration_time = models.FloatField(
         blank=True, null=True, db_comment='碳化持续时间(-)')
     carbon_depth = models.FloatField(blank=True, null=True, db_comment='碳化深度')
-    compressive_strength_28days = models.FloatField(
+    compressive_strength_28days_carbon = models.FloatField(
         blank=True, null=True, db_comment='28天抗压强度(MPa)')
 
     class Meta:
@@ -213,8 +213,8 @@ class FaGene(models.Model):
     fa_id = models.CharField(
         db_column='FA_ID', primary_key=True, max_length=100, db_comment='粉煤灰表索引项(-)')
     # Field name made lowercase.
-    oxide = models.ForeignKey('OxidePercentage', models.DO_NOTHING,
-                              db_column='oxide_ID', blank=True, null=True, db_comment='氧化物百分比表索引项(-)')
+    oxide_fa = models.ForeignKey('OxidePercentage', models.DO_NOTHING,
+                                 db_column='oxide_ID', blank=True, null=True, db_comment='氧化物百分比表索引项(-)')
     # Field name made lowercase.
     fa_content_1 = models.FloatField(
         db_column='FA_content_1', blank=True, null=True, db_comment='粉煤灰一级用量(kg/m3)')
@@ -264,7 +264,7 @@ class FrostResistanceWaterGene(models.Model):
         blank=True, null=True, db_comment='3天抗压强度(MPa)')
     compressive_strength_7days = models.FloatField(
         blank=True, null=True, db_comment='7天抗压强度(MPa)')
-    compressive_strength_28days = models.FloatField(
+    compressive_strength_28days_frost = models.FloatField(
         blank=True, null=True, db_comment='28天抗压强度(MPa)')
 
     class Meta:
@@ -297,11 +297,11 @@ class LspGene(models.Model):
     lsp_id = models.CharField(
         db_column='LSP_ID', primary_key=True, max_length=100, db_comment='石灰石表索引项(-)')
     # Field name made lowercase.
-    oxide = models.ForeignKey('OxidePercentage', models.DO_NOTHING,
-                              db_column='oxide_ID', blank=True, null=True, db_comment='氧化物百分比表索引项(-)')
+    oxide_lsp = models.ForeignKey('OxidePercentage', models.DO_NOTHING,
+                                  db_column='oxide_ID', blank=True, null=True, db_comment='氧化物百分比表索引项(-)')
     # Field name made lowercase.
-    ssa = models.FloatField(db_column='SSa', blank=True,
-                            null=True, db_comment='比表面积(m2/g)')
+    ssa_lsp = models.FloatField(db_column='SSa', blank=True,
+                                null=True, db_comment='比表面积(m2/g)')
     # Field name made lowercase.
     lsp_content = models.FloatField(
         db_column='LSP_content', blank=True, null=True, db_comment='石灰石粉用量(kg/m3)')
@@ -333,8 +333,8 @@ class OxidePercentage(models.Model):
     # Field name made lowercase.
     so3 = models.FloatField(db_column='SO3', blank=True,
                             null=True, db_comment='三氧化硫占比(%)')
-    type = models.CharField(max_length=100, blank=True,
-                            null=True, db_comment='当前氧化物归属材料(-)')
+    type_oxide = models.CharField(db_column='type', max_length=100, blank=True,
+                                  null=True, db_comment='当前氧化物归属材料(-)')
     content = models.FloatField(
         blank=True, null=True, db_comment='氧化物含量(kg/m3)')
 
@@ -389,11 +389,11 @@ class SilicaFumeGene(models.Model):
     silica_fume_id = models.CharField(
         db_column='silica_fume_ID', primary_key=True, max_length=100, db_comment='硅灰表索引项(-)')
     # Field name made lowercase.
-    oxide = models.ForeignKey(OxidePercentage, models.DO_NOTHING,
-                              db_column='oxide_ID', blank=True, null=True, db_comment='氧化物百分比表索引项(-)')
+    oxide_silica = models.ForeignKey(OxidePercentage, models.DO_NOTHING,
+                                     db_column='oxide_ID', blank=True, null=True, db_comment='氧化物百分比表索引项(-)')
     # Field name made lowercase.
-    ssa = models.FloatField(db_column='SSa', blank=True,
-                            null=True, db_comment='比表面积(m2/g)')
+    ssa_silica = models.FloatField(db_column='SSa', blank=True,
+                                   null=True, db_comment='比表面积(m2/g)')
     silica_fume_content = models.FloatField(
         blank=True, null=True, db_comment='硅灰用量(kg/m3)')
 
@@ -407,8 +407,8 @@ class SlagFineGene(models.Model):
     slag_fine_id = models.CharField(
         db_column='slag_fine_ID', primary_key=True, max_length=100, db_comment='超细矿渣表索引项(-)')
     # Field name made lowercase.
-    oxide = models.ForeignKey(OxidePercentage, models.DO_NOTHING,
-                              db_column='oxide_ID', blank=True, null=True, db_comment='氧化物百分比表索引项(-)')
+    oxide_slag_fine = models.ForeignKey(OxidePercentage, models.DO_NOTHING,
+                                        db_column='oxide_ID', blank=True, null=True, db_comment='氧化物百分比表索引项(-)')
     slag_fine_content = models.FloatField(
         blank=True, null=True, db_comment='超细矿渣用量(kg/m3)')
 
@@ -422,8 +422,8 @@ class SlagGene(models.Model):
     slag_id = models.CharField(
         db_column='slag_ID', primary_key=True, max_length=100, db_comment='矿渣表索引项(-)')
     # Field name made lowercase.
-    oxide = models.ForeignKey(OxidePercentage, models.DO_NOTHING,
-                              db_column='oxide_ID', blank=True, null=True, db_comment='氧化物百分比表索引项(-)')
+    oxide_slag = models.ForeignKey(OxidePercentage, models.DO_NOTHING,
+                                   db_column='oxide_ID', blank=True, null=True, db_comment='氧化物百分比表索引项(-)')
     slag_content = models.FloatField(
         blank=True, null=True, db_comment='矿渣粉用量(kg/m3)')
 
